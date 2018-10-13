@@ -16,11 +16,15 @@ public class RadioGUI extends javax.swing.JFrame {
     
     public RadioGUI() throws IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
+        if(model.getRowCount() == 0){
+            miVerbergen.setVisible(false);
+            miAnzeigen.setVisible(false);
+        }
         jtOut.setModel(model);
         try{
             model.load(file);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Load error!");
+            
         }
         jtOut.setDefaultRenderer(Object.class, new SenderTableRenderer());
         jtOut.setShowGrid(true);
@@ -30,35 +34,35 @@ public class RadioGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        miAdd = new javax.swing.JMenuItem();
+        miVerbergen = new javax.swing.JMenuItem();
+        miAnzeigen = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtOut = new javax.swing.JTable();
 
-        jMenuItem1.setText("Hinzufügen");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miAdd.setText("Hinzufügen");
+        miAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miAddActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jMenuItem1);
+        jPopupMenu1.add(miAdd);
 
-        jMenuItem2.setText("Band verstecken");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        miVerbergen.setText("Band verstecken");
+        miVerbergen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                miVerbergenActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jMenuItem2);
+        jPopupMenu1.add(miVerbergen);
 
-        jMenuItem3.setText("Band anzeigen");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        miAnzeigen.setText("Band anzeigen");
+        miAnzeigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                miAnzeigenActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jMenuItem3);
+        jPopupMenu1.add(miAnzeigen);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -97,29 +101,32 @@ public class RadioGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void miAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAddActionPerformed
         SenderDlg dlg = new SenderDlg(this, true);
         
         dlg.setVisible(true);
         if(dlg.isOk()){
             model.add(dlg.getSender());
-            
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        if(model.getRowCount() > 0){
+            miVerbergen.setVisible(true);
+            miAnzeigen.setVisible(true);
+        }
+    }//GEN-LAST:event_miAddActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void miVerbergenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVerbergenActionPerformed
         model.updateNumCols(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_miVerbergenActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void miAnzeigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAnzeigenActionPerformed
         model.updateNumCols(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_miAnzeigenActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
             model.safe(file);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Safe error!");
+            
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -165,11 +172,11 @@ public class RadioGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtOut;
+    private javax.swing.JMenuItem miAdd;
+    private javax.swing.JMenuItem miAnzeigen;
+    private javax.swing.JMenuItem miVerbergen;
     // End of variables declaration//GEN-END:variables
 }

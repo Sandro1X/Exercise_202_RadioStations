@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.table.AbstractTableModel;
 
 public class SenderTableModel extends AbstractTableModel{
@@ -20,6 +21,7 @@ public class SenderTableModel extends AbstractTableModel{
     
     public void add(Sender s){
         sender.add(s);
+        Collections.sort(sender, new SortierNachFrequenz());
         fireTableDataChanged();
     }
     
