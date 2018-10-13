@@ -1,6 +1,8 @@
 package BL;
 
-public class Sender {
+import java.io.Serializable;
+
+public class Sender implements Serializable{
     private String name;
     private double frequenz;
     private String band;
@@ -10,7 +12,7 @@ public class Sender {
         this.frequenz = frequenz;
         this.band = band;
     }
-
+    
     public String getName() {
         return name;
     }

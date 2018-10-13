@@ -2,15 +2,26 @@ package GUI;
 
 import BL.SenderTableModel;
 import BL.SenderTableRenderer;
-import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class RadioGUI extends javax.swing.JFrame {
     
-    SenderTableModel model = new SenderTableModel();
+    private SenderTableModel model = new SenderTableModel();
+    private File file = new File("src\\data.bin");
     
-    public RadioGUI() {
+    public RadioGUI() throws IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         jtOut.setModel(model);
+        try{
+            model.load(file);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Load error!");
+        }
         jtOut.setDefaultRenderer(Object.class, new SenderTableRenderer());
         jtOut.setShowGrid(true);
     }
@@ -50,6 +61,11 @@ public class RadioGUI extends javax.swing.JFrame {
         jPopupMenu1.add(jMenuItem3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jScrollPane1.setComponentPopupMenu(jPopupMenu1);
 
@@ -99,6 +115,14 @@ public class RadioGUI extends javax.swing.JFrame {
         model.updateNumCols(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            model.safe(file);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Safe error!");
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -129,7 +153,13 @@ public class RadioGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RadioGUI().setVisible(true);
+                try {
+                    new RadioGUI().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(RadioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RadioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

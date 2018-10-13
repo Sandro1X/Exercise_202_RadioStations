@@ -20,6 +20,7 @@ public class SenderTableRenderer implements TableCellRenderer{
         }else if (s.getBand().equals("FM")){
             c = Color.RED;
         }
+        
         switch(column){
             case 0: label.setText(s.getName());
             label.setBackground(c);

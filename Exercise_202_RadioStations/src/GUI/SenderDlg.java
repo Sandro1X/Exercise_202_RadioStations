@@ -1,6 +1,7 @@
 package GUI;
 
 import BL.Sender;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class SenderDlg extends javax.swing.JDialog {
@@ -115,14 +116,18 @@ public class SenderDlg extends javax.swing.JDialog {
         Double frequenz = Double.parseDouble(tfFrequenz.getText());
         String band = tfBand.getText();
         
-        if(band.equals("AM")||band.equals("FM")){
-            sender = new Sender(name, frequenz, band);
-            ok = true;
-            this.dispose();
+        if((band.equals("AM")||band.equals("FM"))){
+            if((frequenz > 0 && frequenz < 1000)){
+                sender = new Sender(name, frequenz, band);
+                ok = true;
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null,"Es nur eine Frequenz zwischen 0 und 1000 eingegeben werden!");
+                ok = false;
+            }
         }else{
             JOptionPane.showMessageDialog(null,"Es kann nur FM oder AM als Band eingegeben werden!");
             ok = false;
-            this.dispose();
         }
     }//GEN-LAST:event_btAddActionPerformed
 
