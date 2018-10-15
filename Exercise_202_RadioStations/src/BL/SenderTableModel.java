@@ -52,6 +52,10 @@ public class SenderTableModel extends AbstractTableModel{
         oos.flush();
         oos.close();
     }
+
+    public ArrayList<Sender> getSender() {
+        return sender;
+    }
     
     @Override
     public int getRowCount() {

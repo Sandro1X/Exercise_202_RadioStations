@@ -26,6 +26,11 @@ public class RadioGUI extends javax.swing.JFrame {
         }catch(Exception e){
             
         }
+        if(model.getSender().isEmpty()){
+            model.updateNumCols(false);
+        }else{
+            model.updateNumCols(true);
+        }
         jtOut.setDefaultRenderer(Object.class, new SenderTableRenderer());
         jtOut.setShowGrid(true);
     }
@@ -112,6 +117,7 @@ public class RadioGUI extends javax.swing.JFrame {
             miVerbergen.setVisible(true);
             miAnzeigen.setVisible(true);
         }
+        model.updateNumCols(true);
     }//GEN-LAST:event_miAddActionPerformed
 
     private void miVerbergenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVerbergenActionPerformed
@@ -126,7 +132,6 @@ public class RadioGUI extends javax.swing.JFrame {
         try {
             model.safe(file);
         } catch (IOException ex) {
-            
         }
     }//GEN-LAST:event_formWindowClosing
 
